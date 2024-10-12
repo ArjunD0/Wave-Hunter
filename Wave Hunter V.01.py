@@ -1,26 +1,32 @@
-import pygame #pygame is imported into the program
+import pygame
+pygame.init()
+screen_width = 640
+screen_height = 360
 
-pygame.init() #pygame is initialized
 
-screen_width = 640 #width of the screen
-screen_height = 360 #height of the screen
-
-screen = pygame.display.set_mode((screen_width, screen_height)) #setting the display 
+screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Wave Hunter")
 
-player_positionx = 320 #setting position of the player on the x and y
-player_positiony = 180
-player_width = 128 #dimensions of the player
-player_height = 128
-player_velocity = 5 #speed of the player movement
+
+player_position = [320, 180]
+player_size = 128
+player_velocity = 5
 
 game_running = True
-while game_running: #game loop
+while game_running:
     for event in pygame.event.get():
-        if event.type == pygame.QUIT: #checks if x button in top right is pressed
-            game_running = False #redirects out of loop
+        if event.type == pygame.QUIT:
+            game_running = False
 
-    pygame.draw.rect(screen, (255, 0, 0), (player_positionx, player_positiony, player_width, player_height))
-    pygame.display.update()
+    
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        player_position[0] -= player_velocity
+    if keys[pygame.K_RIGHT]:
+        player_position[0] += player_velocity
+        
+    screen.fill((0, 0, 0))  
+    pygame.draw.rect(screen, (255, 0, 0), (player_position[0], player_position[1], player_size, player_size))
+    pygame.display.flip()  
 
-pygame.quit() #program closes
+pygame.quit()
